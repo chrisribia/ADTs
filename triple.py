@@ -1,29 +1,10 @@
 lst = [12, 3, 1, 2, -6, 5, -8, 6]
-def sum_two(lst,sum):
-    """
-    ARGS:
-        function takes list as argument
+def sum_of_triple(lst,10):
+        for i in lst:
+            for x in lst:
+                for w in lst:
+                    sum = i + x + w
+                    if sum == 0:
+                        print(i,x,w)
 
-    Returns:
-        returns a list of two numbers of sum 10  
-
-    Run Time:
-        O(n)
- 
-    """
-    triplets = [] 
-    for i in lst:
-        for x in lst:
-            sum2 = i + x
-            if sum2 < sum:
-                triplets.append(i)
-                triplets.append(x)
-                third_number = sum - sum2
-                if third_number in lst and third_number not in triplets:                    
-                    triplets.append(third_number)                    
-                    print(triplets)
-                     
-                
-sum_two(lst,0)
-
-  
+    
