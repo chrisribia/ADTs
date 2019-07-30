@@ -11,7 +11,8 @@ def sum_two(lst,sum):
         O(n)
 
     """
-    n = {x:sum-x for x in lst if (sum - x) in lst  and (x - sum) in lst}
+    n = {x:sum-x for x in lst 
+                        if (sum - x) in lst  and (x - sum) in lst}
     print(n)
 
 sum_two(lst,sum = 10)
