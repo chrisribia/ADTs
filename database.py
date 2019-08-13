@@ -44,13 +44,15 @@ class Postgres(ABC):
   
       
     @abstractmethod
-    def select_table(self,query):
+    def select_table(self,query,url):
         try:
             cursor.execute(query)
-            self.session            
+            self.session 
+            self.close(url)
          
         except:
             print(" table not found")  
+            self.close(url)
 
     @abstractmethod
     def create_table(self,query):             
@@ -58,8 +60,12 @@ class Postgres(ABC):
             cursor.execute(query)
             self.session            
             print('Success')
+            self.close(url)
         except:
             print("Failed")   
+            self.close(url)
+            
+          
 
     @abstractmethod
     def insert_rows(self,query,url):
@@ -67,6 +73,7 @@ class Postgres(ABC):
             cursor = self.cursor()
             cursor.execute(query)
             self.connect(url).self.commit()
+            
 
         except (Exception, p.Error)as e:
             print(e)
@@ -81,7 +88,8 @@ class Postgres(ABC):
          try:
             cursor = self.cursor()
             cursor.execute(query)
-            self.session            
+            self.session           
+            self.close(url)
          
         except:
             print(" table not found")  
@@ -92,10 +100,13 @@ class Postgres(ABC):
         cursor = conn.cursor()        
         try:        
             self.cursor(query)
-            self.session                
+            self.session   
+            self.close(url)
         except:
             print("Failed to Destroy tables")
+            self.close(url)
 
     @abstractmethod
-    def close(self):
-        pass
+    def close(self,url):
+        self.cursor().close()
+        self.connect(url).close()
