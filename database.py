@@ -26,7 +26,7 @@ class Postgres(ABC):
           try:               
             cursor = self.cursor()
             cursor.execute(query)
-             self.connect(url).commit()
+             self.connect(url).self.commit()
            
 
           except (Exception, p.Error)as e:
@@ -66,7 +66,7 @@ class Postgres(ABC):
         try:
             cursor = self.cursor()
             cursor.execute(query)
-            self.connect(url).commit()
+            self.connect(url).self.commit()
 
         except (Exception, p.Error)as e:
             print(e)
