@@ -12,12 +12,12 @@ class Postgres(ABC):
     @abstractmethod
     def session(self):
         autocommit = True
-        return self.connect.commit()
+        return self.connect.self.commit()
    
      @abstractmethod
     def cursor(self,query,url):
         conn = self.connect(url)
-        cursor = conn.cursor(query)
+        cursor = conn.cursor()
         return cursor
       
 
@@ -29,8 +29,8 @@ class Postgres(ABC):
              self.connect(url).self.commit()
            
 
-          except (Exception, p.Error)as e:
-            print("failed to create databse" + e)
+          except (Exception, p.Error)as error:
+            print("failed to create databse" + error)
 
            finally:
 
@@ -57,9 +57,9 @@ class Postgres(ABC):
         try:
             cursor.execute(query)
             self.session            
-            print('Creating Tables.....Done')
+            print('Success')
         except:
-            print("Failed to Create tables")   
+            print("Failed")   
 
     @abstractmethod
     def insert_rows(self,query,url):
@@ -79,6 +79,7 @@ class Postgres(ABC):
     @abstractmethod
     def show_table(self,query):
          try:
+            cursor = self.cursor()
             cursor.execute(query)
             self.session            
          
