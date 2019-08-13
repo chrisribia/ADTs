@@ -15,8 +15,21 @@ class Postgres(ABC):
         return self.connect.commit()
 
     @abstractmethod
-    def create_database(self):
-        CREATE DATABASE dbname;
+    def create_database(self,url):
+          try:
+            query = """CREATE DATABASE db_name='{0}';""".format(database_name)
+
+            cursor = self.cursor()
+            cursor.execute(query)
+            self.connect(url).commit()
+
+        except (Exception, p.Error)as e:
+            print("failed to create databse" + e)
+
+        finally:
+
+            if self.connect(DATABASE_URL):
+                self.close() 
 
     @abstractmethod
     def status(self):
