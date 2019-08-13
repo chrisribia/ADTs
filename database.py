@@ -15,10 +15,8 @@ class Postgres(ABC):
         return self.connect.commit()
 
     @abstractmethod
-    def create_database(self,url):
-          try:
-            query = """CREATE DATABASE db_name='{0}';""".format(database_name)
-
+    def create_database(self,query):
+          try:            
             cursor = self.cursor()
             cursor.execute(query)
             self.connect(url).commit()
@@ -28,7 +26,7 @@ class Postgres(ABC):
 
         finally:
 
-            if self.connect(DATABASE_URL):
+            if self.connect(url):
                 self.close() 
 
     @abstractmethod
@@ -37,17 +35,24 @@ class Postgres(ABC):
 
     @abstractmethod
     def cursor(self,query):
-        return self.session.cursor(query)
-
+        conn = self.connect(url)
+        cursor = conn.cursor(query)
+        return cursor
+      
+      
     @abstractmethod
     def select_table(self,query):
-        pass
+        try:
+            cursor.execute(query)
+            self.session            
+         
+        except:
+            print(" table not found")  
 
     @abstractmethod
     def create_table(self,query):             
         try:
-            for query in queries:
-                cursor.execute(query)
+            cursor.execute(query)
             self.session            
             print('Creating Tables.....Done')
         except:
@@ -55,17 +60,31 @@ class Postgres(ABC):
 
     @abstractmethod
     def insert_rows(self,query):
-        conn = psycopg2.connect(query)
-        cur = conn.cursor()
-        self.session  
+        try:
+            cursor = self.cursor()
+            cursor.execute(query)
+            self.connect(url).commit()
+
+        except (Exception, p.Error)as e:
+            print(e)
+
+        finally:
+
+            if self.connect(url):
+                self.close() 
 
     @abstractmethod
     def show_table(self,query):
-        pass
+         try:
+            cursor.execute(query)
+            self.session            
+         
+        except:
+            print(" table not found")  
 
     @abstractmethod
     def drop_table(self,query):
-        conn = connection(DATABASE_URL)
+        conn = connection(url)
         cursor = conn.cursor()        
         try:        
             self.cursor(query)
